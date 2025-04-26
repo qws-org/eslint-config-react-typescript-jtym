@@ -1,4 +1,5 @@
-import pluginTypescript from "@stylistic/eslint-plugin-ts";
+import stylisticTsPlugin from "@stylistic/eslint-plugin-ts";
+import pluginTypescript from "@typescript-eslint/eslint-plugin";
 import typescriptParser from "@typescript-eslint/parser";
 import configStandardWithTypescript from "eslint-config-love";
 import configStandard from "eslint-config-standard";
@@ -129,6 +130,7 @@ function createTsConfig(opts) {
         files: [globs.ts, globs.tsx],
         plugins: {
             "@typescript-eslint": pluginTypescript,
+            stylistic: stylisticTsPlugin,
         },
         languageOptions: {
             parser: typescriptParser,
@@ -174,7 +176,7 @@ function createTsConfig(opts) {
                     allowedNames: ["loader", "clientLoader", "action", "clientAction"],
                 },
             ],
-           /* "@typescript-eslint/member-delimiter-style": [
+           "stylistic/member-delimiter-style": [
                 "error",
                 {
                     multiline: {
@@ -187,7 +189,7 @@ function createTsConfig(opts) {
                     },
                     multilineDetection: "brackets",
                 },
-            ],*/
+            ],
             "@typescript-eslint/method-signature-style": ["off"],
             "@typescript-eslint/no-confusing-void-expression": ["off"],
             "@typescript-eslint/no-dynamic-delete": ["off"],
