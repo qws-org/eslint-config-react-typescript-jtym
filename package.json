@@ -1,10 +1,10 @@
 {
   "name": "@qws-org/eslint-config-react-typescript-jtym",
-  "version": "1.1.0",
+  "version": "1.0.0",
   "description": "",
   "scripts": {
     "build": "vite build",
-    "publish": "pnpm publish"
+    "publish-package": "pnpm publish"
   },
   "publishConfig": {
     "registry": "https://npm.pkg.github.com"
