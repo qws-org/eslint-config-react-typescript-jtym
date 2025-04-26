@@ -119,6 +119,11 @@ const baseConfig = {
 const { "@typescript-eslint/ban-types": _, ...standardLoveRules } =
   configStandardWithTypescript.rules;
 
+/**
+ *
+ * @param opts {{ts: string, tsx: string, tsconfigRootDir: string, project: Array<string>}}
+ * @returns {{files: string[], plugins: {"@typescript-eslint": {configs: Record<string, ClassicConfig.Config>, meta: FlatConfig.PluginMeta, rules: typeof rules}}, languageOptions: {parser: {meta: {name: string, version: string}, createProgram: (configFile: string, projectDirectory?: string) => ts.Program, clearCaches: () => void, ParserServices: ParserServicesWithoutTypeInformation | ParserServicesWithTypeInformation, version: string, withoutProjectParserOptions: <Options extends object>(opts: Options) => Omit<Options, "EXPERIMENTAL_useProjectService" | "project" | "projectService">, ParserServicesWithoutTypeInformation: ParserServicesWithoutTypeInformation, ParserOptions: ParserOptions, parseForESLint: (code: (string | ts.SourceFile), parserOptions?: (ParserOptions | null)) => ParseForESLintResult, ParserServicesWithTypeInformation: ParserServicesWithTypeInformation, parse: (code: (string | ts.SourceFile), options?: ParserOptions) => ParseForESLintResult["ast"]}, parserOptions: {sourceType: string, ecmaVersion: string, tsconfigRootDir: *, project: *}}, rules: {"@typescript-eslint/naming-convention": string, "@typescript-eslint/init-declarations": string, "@typescript-eslint/class-methods-use-this": string, "@typescript-eslint/no-empty-function": string, "@typescript-eslint/no-unused-vars": [string,{caughtErrors: string, argsIgnorePattern: string, varsIgnorePattern: string}], "@typescript-eslint/array-type": [string,{default: string}], "@typescript-eslint/consistent-indexed-object-style": string[], "@typescript-eslint/consistent-type-assertions": string[], "@typescript-eslint/consistent-type-definitions": string[], "@typescript-eslint/no-throw-literal": string[], "@typescript-eslint/only-throw-error": string[], "@typescript-eslint/consistent-type-imports": [string,{prefer: string}], "@typescript-eslint/explicit-function-return-type": [string,{allowExpressions: boolean, allowHigherOrderFunctions: boolean, allowTypedFunctionExpressions: boolean, allowDirectConstAssertionInArrowFunctions: boolean, allowedNames: string[]}], "@typescript-eslint/member-delimiter-style": [string,{multiline: {delimiter: string, requireLast: boolean}, singleline: {delimiter: string, requireLast: boolean}, multilineDetection: string}], "@typescript-eslint/method-signature-style": string[], "@typescript-eslint/no-confusing-void-expression": string[], "@typescript-eslint/no-dynamic-delete": string[], "@typescript-eslint/no-floating-promises": string[], "@typescript-eslint/no-invalid-void-type": string[], "@typescript-eslint/no-misused-promises": string[], "no-use-before-define": string[], "@typescript-eslint/no-use-before-define": [string,{functions: boolean, classes: boolean, variables: boolean, allowNamedExports: boolean, enums: boolean, typedefs: boolean, ignoreTypeReferences: boolean}], "@typescript-eslint/prefer-reduce-type-parameter": string[], "@typescript-eslint/promise-function-async": string[], "@typescript-eslint/restrict-template-expressions": string[], "@typescript-eslint/return-await": string[], "@typescript-eslint/strict-boolean-expressions": string[]}, settings: {"import/parsers": {"@typescript-eslint/parser": string[]}, "import/resolver": {node: {extensions: string[]}, typescript: {project: *}}}}}
+ */
 function createTsConfig(opts) {
   return {
     files: [globs.ts, globs.tsx],
@@ -249,15 +254,20 @@ const reactRules = {
 
 /**
  *
- * @param props {{ts: {tsconfigRootDir: string; project: Array<string>}, useReactRules?: boolean }}
+ * @param props {{ts: {tsconfigRootDir: string; project: Array<string>}, useReactRules?: boolean, globs?: {js?: string; ts?:string, tsx?: string, any?:string, config?: string} }}
  * @return {import('eslint').Linter.FlatConfig}
  */
-export const createConfig = ({ts, useReactRules}) => {
+export default function({ts, useReactRules, ...rest}) {
   const rules = [baseConfig, eslintPluginPrettierRecommended];
+  const globals = {
+    ...globs,
+    ...rest.globs,
+  }
   if (ts) {
     rules.push(createTsConfig({
       tsconfigRootDir: ts.tsconfigRootDir,
       project: ts.project,
+      ...globals,
     }));
   }
 
