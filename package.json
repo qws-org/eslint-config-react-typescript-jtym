@@ -1,5 +1,5 @@
 {
-  "name": "eslint-config-react-typescript-jtym",
+  "name": "@jack/eslint-config-react-typescript-jtym",
   "version": "1.0.0",
   "description": "",
   "main": "dist/index.js",
@@ -33,6 +33,13 @@
     "prettier": "3.5.3",
     "vite": "6.3.3"
   },
-  "private": true,
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/qws-org/eslint-config-react-typescript-jtym"
+  },
+  "homepage": "https://github.com/qws-org/eslint-config-react-typescript-jtym",
   "packageManager": "pnpm@9.14.2+sha512.6e2baf77d06b9362294152c851c4f278ede37ab1eba3a55fda317a4a17b209f4dbb973fb250a77abc463a341fcb1f17f17cfa24091c4eb319cda0d9b84278387"
 }
