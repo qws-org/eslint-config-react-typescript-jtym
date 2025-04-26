@@ -2,6 +2,7 @@
   "name": "@qws-org/eslint-config-react-typescript-jtym",
   "version": "1.0.0",
   "description": "",
+  "type": "module",
   "scripts": {
     "build": "vite build",
     "publish-package": "pnpm publish"
