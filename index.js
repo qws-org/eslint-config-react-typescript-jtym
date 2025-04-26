@@ -224,8 +224,131 @@ function createTsConfig(opts) {
   };
 }
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+const tsConfig = {
+  files: [globs.ts, globs.tsx],
+  plugins: {
+    "@typescript-eslint": pluginTypescript,
+  },
+  languageOptions: {
+    parser: typescriptParser,
+  /*  parserOptions: {
+      sourceType: "module",
+      ecmaVersion: "latest",
+      tsconfigRootDir: opts.tsconfigRootDir,
+      project: opts.project,
+    },*/
+  },
+  rules: {
+    ...standardLoveRules,
+    ...tsRules,
+    "@typescript-eslint/naming-convention": "off",
+    "@typescript-eslint/init-declarations": "off",
+    "@typescript-eslint/class-methods-use-this": "off",
+    "@typescript-eslint/no-empty-function": "off",
+    "@typescript-eslint/no-unused-vars": [
+      "error",
+      {
+        caughtErrors: "none",
+        argsIgnorePattern: "^_",
+        varsIgnorePattern: "^_",
+      },
+    ],
+    "@typescript-eslint/array-type": ["error", { default: "generic" }],
+    "@typescript-eslint/consistent-indexed-object-style": ["off"],
+    "@typescript-eslint/consistent-type-assertions": ["off"],
+    "@typescript-eslint/consistent-type-definitions": ["off"],
+    "@typescript-eslint/no-throw-literal": ["off"],
+    "@typescript-eslint/only-throw-error": ["off"],
+    "@typescript-eslint/consistent-type-imports": [
+      "error",
+      { prefer: "type-imports" },
+    ],
+    "@typescript-eslint/explicit-function-return-type": [
+      "error",
+      {
+        allowExpressions: true,
+        allowHigherOrderFunctions: true,
+        allowTypedFunctionExpressions: true,
+        allowDirectConstAssertionInArrowFunctions: true,
+        allowedNames: ["loader", "clientLoader", "action", "clientAction"],
+      },
+    ],
+    "@typescript-eslint/member-delimiter-style": [
+      "error",
+      {
+        multiline: {
+          delimiter: "semi",
+          requireLast: true,
+        },
+        singleline: {
+          delimiter: "semi",
+          requireLast: false,
+        },
+        multilineDetection: "brackets",
+      },
+    ],
+    "@typescript-eslint/method-signature-style": ["off"],
+    "@typescript-eslint/no-confusing-void-expression": ["off"],
+    "@typescript-eslint/no-dynamic-delete": ["off"],
+    "@typescript-eslint/no-floating-promises": ["off"],
+    "@typescript-eslint/no-invalid-void-type": ["off"],
+    "@typescript-eslint/no-misused-promises": ["off"],
+    "no-use-before-define": ["off"],
+    "@typescript-eslint/no-use-before-define": [
+      "error",
+      {
+        functions: true,
+        classes: true,
+        variables: true,
+        allowNamedExports: false,
+        enums: true,
+        typedefs: true,
+        ignoreTypeReferences: true,
+      },
+    ],
+    "@typescript-eslint/prefer-reduce-type-parameter": ["off"],
+    "@typescript-eslint/promise-function-async": ["off"],
+    "@typescript-eslint/restrict-template-expressions": ["off"],
+    "@typescript-eslint/return-await": ["error", "in-try-catch"],
+    "@typescript-eslint/strict-boolean-expressions": ["off"],
+  },
+  settings: {
+    "import/parsers": {
+      "@typescript-eslint/parser": [".ts", ".tsx"],
+    },
+    "import/resolver": {
+      node: {
+        extensions: [".ts", ".tsx"],
+      },
+      typescript: {
+        project: opts.project,
+      },
+    },
+  },
+}
+
+
+const reactRules = {
+  // in main config for TSX/JSX source files
+  plugins: {
+    "react-refresh": reactRefresh,
+  },
+  rules: {
+    "react-refresh/only-export-components": [
+      "warn",
+      {
+        allowExportNames: [
+          "meta",
+          "links",
+          "headers",
+          "loader",
+          "action",
+          "clientLoader",
+        ],
+      },
+    ],
+  },
+}
 
 /**
  *
@@ -239,27 +362,7 @@ export const createConfig = (_dirname) => {
       tsconfigRootDir: __dirname,
       project: ["./tsconfig.json"],
     }),
-    {
-      // in main config for TSX/JSX source files
-      plugins: {
-        "react-refresh": reactRefresh,
-      },
-      rules: {
-        "react-refresh/only-export-components": [
-          "warn",
-          {
-            allowExportNames: [
-              "meta",
-              "links",
-              "headers",
-              "loader",
-              "action",
-              "clientLoader",
-            ],
-          },
-        ],
-      },
-    },
+    reactRules,
     eslintPluginPrettierRecommended,
     {
       plugins: { boundaries },
@@ -397,3 +500,10 @@ export const createConfig = (_dirname) => {
     },
   ];
 };
+
+export default {
+  base: baseConfig,
+  reactRules,
+  prettierRules: eslintPluginPrettierRecommended,
+  tsRules: tsConfig,
+}
