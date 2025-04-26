@@ -1,5 +1,5 @@
 {
-  "name": "@jack/eslint-config-react-typescript-jtym",
+  "name": "@qws-org/eslint-config-react-typescript-jtym",
   "version": "1.0.0",
   "description": "",
   "main": "dist/index.js",
