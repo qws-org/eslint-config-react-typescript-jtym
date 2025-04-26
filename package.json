@@ -1,6 +1,6 @@
 {
   "name": "@qws-org/eslint-config-react-typescript-jtym",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "",
   "scripts": {
     "build": "vite build",
@@ -18,7 +18,7 @@
   "exports": {
     ".": {
       "require": "./dist/index.cjs.js",
-      "import":  "./dist/index.es.mjs"
+      "import": "./dist/index.es.mjs"
     }
   },
   "homepage": "https://github.com/qws-org/eslint-config-react-typescript-jtym",
