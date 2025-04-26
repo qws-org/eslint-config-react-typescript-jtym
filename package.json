@@ -1,6 +1,6 @@
 {
   "name": "@qws-org/eslint-config-react-typescript-jtym",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "",
   "scripts": {
     "build": "vite build",
