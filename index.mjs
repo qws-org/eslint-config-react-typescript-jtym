@@ -122,7 +122,12 @@ const {"@typescript-eslint/ban-types": _, ...standardLoveRules} =
 
 /**
  *
- * @param opts {{ts: string, tsx: string, tsconfigRootDir: string, project: Array<string>}}
+ * @param opts {{
+ * ts: string,
+ * tsx: string,
+ * tsconfigRootDir: string,
+ * project: Array<string>,
+ * allowedFunctionNames: Array<string>}}
  * @returns {{files: string[], plugins: {"@typescript-eslint": {configs: Record<string, ClassicConfig.Config>, meta: FlatConfig.PluginMeta, rules: typeof rules}}, languageOptions: {parser: {meta: {name: string, version: string}, createProgram: (configFile: string, projectDirectory?: string) => ts.Program, clearCaches: () => void, ParserServices: ParserServicesWithoutTypeInformation | ParserServicesWithTypeInformation, version: string, withoutProjectParserOptions: <Options extends object>(opts: Options) => Omit<Options, "EXPERIMENTAL_useProjectService" | "project" | "projectService">, ParserServicesWithoutTypeInformation: ParserServicesWithoutTypeInformation, ParserOptions: ParserOptions, parseForESLint: (code: (string | ts.SourceFile), parserOptions?: (ParserOptions | null)) => ParseForESLintResult, ParserServicesWithTypeInformation: ParserServicesWithTypeInformation, parse: (code: (string | ts.SourceFile), options?: ParserOptions) => ParseForESLintResult["ast"]}, parserOptions: {sourceType: string, ecmaVersion: string, tsconfigRootDir: *, project: *}}, rules: {"@typescript-eslint/naming-convention": string, "@typescript-eslint/init-declarations": string, "@typescript-eslint/class-methods-use-this": string, "@typescript-eslint/no-empty-function": string, "@typescript-eslint/no-unused-vars": [string,{caughtErrors: string, argsIgnorePattern: string, varsIgnorePattern: string}], "@typescript-eslint/array-type": [string,{default: string}], "@typescript-eslint/consistent-indexed-object-style": string[], "@typescript-eslint/consistent-type-assertions": string[], "@typescript-eslint/consistent-type-definitions": string[], "@typescript-eslint/no-throw-literal": string[], "@typescript-eslint/only-throw-error": string[], "@typescript-eslint/consistent-type-imports": [string,{prefer: string}], "@typescript-eslint/explicit-function-return-type": [string,{allowExpressions: boolean, allowHigherOrderFunctions: boolean, allowTypedFunctionExpressions: boolean, allowDirectConstAssertionInArrowFunctions: boolean, allowedNames: string[]}], "@typescript-eslint/member-delimiter-style": [string,{multiline: {delimiter: string, requireLast: boolean}, singleline: {delimiter: string, requireLast: boolean}, multilineDetection: string}], "@typescript-eslint/method-signature-style": string[], "@typescript-eslint/no-confusing-void-expression": string[], "@typescript-eslint/no-dynamic-delete": string[], "@typescript-eslint/no-floating-promises": string[], "@typescript-eslint/no-invalid-void-type": string[], "@typescript-eslint/no-misused-promises": string[], "no-use-before-define": string[], "@typescript-eslint/no-use-before-define": [string,{functions: boolean, classes: boolean, variables: boolean, allowNamedExports: boolean, enums: boolean, typedefs: boolean, ignoreTypeReferences: boolean}], "@typescript-eslint/prefer-reduce-type-parameter": string[], "@typescript-eslint/promise-function-async": string[], "@typescript-eslint/restrict-template-expressions": string[], "@typescript-eslint/return-await": string[], "@typescript-eslint/strict-boolean-expressions": string[]}, settings: {"import/parsers": {"@typescript-eslint/parser": string[]}, "import/resolver": {node: {extensions: string[]}, typescript: {project: *}}}}}
  */
 function createTsConfig(opts) {
@@ -173,10 +178,10 @@ function createTsConfig(opts) {
                     allowHigherOrderFunctions: true,
                     allowTypedFunctionExpressions: true,
                     allowDirectConstAssertionInArrowFunctions: true,
-                    allowedNames: ["loader", "clientLoader", "action", "clientAction"],
+                    allowedNames: opts.allowedFunctionNames,
                 },
             ],
-           "stylistic/member-delimiter-style": [
+            "stylistic/member-delimiter-style": [
                 "error",
                 {
                     multiline: {
@@ -259,16 +264,17 @@ const reactRules = {
  * @param props {{
  *       boundaries?: {
  *          elements: Array<{type: string, pattern: Array<string>}>,
- *          disalowedInternalTypes: Array<{from: string, allow: Array<string>}>,
- *          allowedExternaltypes: Array<{from: string, dissalow: Array<string>}>
+ *          disallowedInternalTypes: Array<{from: string, allow: Array<string>}>,
+ *          allowedExternalTypes: Array<{from: string, dissalow: Array<string>}>
  *         },
  *       ignores?: Array<string>,
- *       ts: {tsconfigRootDir: string; project: Array<string>},
+ *       explicitFunctionReturnType?: {allowedNames: Array<string>},
+ *       ts?: {tsconfigRootDir: string; project: Array<string>},
  *       useReactRules?: boolean,
  *       globs?: {js?: string; ts?:string, tsx?: string, any?:string, config?: string} }}
  * @return {import('eslint').Linter.FlatConfig}
  */
-export default function ({ts, useReactRules, ignores, boundaries, ...rest}) {
+export default function ({ts, explicitFunctionReturnType, useReactRules, ignores, boundaries, ...rest}) {
     const rules = [baseConfig, eslintPluginPrettierRecommended];
     const globals = {
         ...globs,
@@ -279,6 +285,7 @@ export default function ({ts, useReactRules, ignores, boundaries, ...rest}) {
             tsconfigRootDir: ts.tsconfigRootDir,
             project: ts.project,
             ...globals,
+            allowedFunctionNames: explicitFunctionReturnType?.allowedNames ?? [],
         }));
     }
 
@@ -287,8 +294,8 @@ export default function ({ts, useReactRules, ignores, boundaries, ...rest}) {
     }
 
     if (boundaries) {
-        rules.push( {
-            plugins: { boundaries: boundariesPlugin },
+        rules.push({
+            plugins: {boundaries: boundariesPlugin},
             settings: {
                 "boundaries/elements": boundaries.elements,
             },
@@ -297,14 +304,14 @@ export default function ({ts, useReactRules, ignores, boundaries, ...rest}) {
                     2,
                     {
                         default: "disallow",
-                        rules: boundaries.disalowedInternalTypes,
+                        rules: boundaries.disallowedInternalTypes,
                     },
                 ],
                 "boundaries/external": [
                     2,
                     {
                         default: "allow",
-                        rules: boundaries.allowedExternaltypes,
+                        rules: boundaries.allowedExternalTypes,
                     },
                 ],
             },
