@@ -4,7 +4,8 @@
   "description": "",
   "main": "dist/index.js",
   "scripts": {
-    "build": "vite build"
+    "build": "vite build",
+    "publish": "pnpm publish --access public"
   },
   "dependencies": {
     "@typescript-eslint/eslint-plugin": "8.31.0",
