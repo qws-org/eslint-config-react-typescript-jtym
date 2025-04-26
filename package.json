@@ -15,7 +15,6 @@
   },
   "main": "dist/index.cjs.js",
   "module": "dist/index.es.mjs",
-  "browser": "dist/index.umd.js",
   "exports": {
     ".": {
       "require": "./dist/index.cjs.js",
