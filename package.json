@@ -13,7 +13,13 @@
     "type": "git",
     "url": "git+https://github.com/qws-org/eslint-config-react-typescript-jtym"
   },
-  "main": "index.js",
+  "main": "index.mjs",
+  "exports": {
+    ".": "./index.mjs"
+  },
+  "files": [
+    "index.mjs"
+  ],
   "homepage": "https://github.com/qws-org/eslint-config-react-typescript-jtym",
   "dependencies": {
     "@typescript-eslint/eslint-plugin": "8.31.0",
