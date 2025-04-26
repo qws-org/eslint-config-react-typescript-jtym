@@ -4,7 +4,7 @@ export default defineConfig({
   build: {
     lib: {
       entry: "index.js", // ваш исходник
-      formats: ["cjs", "es", "umd"], // CommonJS и ESM
+      formats: ["cjs", "es"], // CommonJS и ESM
       name: "eslintConfigReactTypescriptJtym",
       fileName: (format) => `index.${format}.js`,
     },

@@ -1,11 +1,11 @@
 {
   "name": "@qws-org/eslint-config-react-typescript-jtym",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "",
   "main": "dist/index.js",
   "scripts": {
     "build": "vite build",
-    "publish": "pnpm publish --access public"
+    "publish": "pnpm build && pnpm publish --access public"
   },
   "dependencies": {
     "@typescript-eslint/eslint-plugin": "8.31.0",
@@ -40,6 +40,12 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/qws-org/eslint-config-react-typescript-jtym"
+  },
+  "exports": {
+    ".": {
+      "require": "./dist/index.cjs.js",
+      "import": "./dist/index.es.js"
+    }
   },
   "homepage": "https://github.com/qws-org/eslint-config-react-typescript-jtym",
   "packageManager": "pnpm@9.14.2+sha512.6e2baf77d06b9362294152c851c4f278ede37ab1eba3a55fda317a4a17b209f4dbb973fb250a77abc463a341fcb1f17f17cfa24091c4eb319cda0d9b84278387"
