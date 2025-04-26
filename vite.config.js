@@ -6,7 +6,10 @@ export default defineConfig({
       entry: "index.js", // ваш исходник
       formats: ["cjs", "es"], // CommonJS и ESM
       name: "eslintConfigReactTypescriptJtym",
-      fileName: (format) => `index.${format}.js`,
+      fileName: (format) => {
+        if (format === "cjs") return "index.cjs.js"; // CJS
+        return "index.es.mjs";
+      },
     },
     rollupOptions: {
       external: [
