@@ -1,8 +1,8 @@
-import pluginTypescript from "@typescript-eslint/eslint-plugin";
+import pluginTypescript from "@stylistic/eslint-plugin-ts";
 import typescriptParser from "@typescript-eslint/parser";
 import configStandardWithTypescript from "eslint-config-love";
 import configStandard from "eslint-config-standard";
-import boundaries from "eslint-plugin-boundaries";
+import boundariesPlugin from "eslint-plugin-boundaries";
 import pluginImport from "eslint-plugin-import";
 import pluginN from "eslint-plugin-n";
 import eslintPluginPrettierRecommended from "eslint-plugin-prettier/recommended";
@@ -174,7 +174,7 @@ function createTsConfig(opts) {
                     allowedNames: ["loader", "clientLoader", "action", "clientAction"],
                 },
             ],
-            "@typescript-eslint/member-delimiter-style": [
+           /* "@typescript-eslint/member-delimiter-style": [
                 "error",
                 {
                     multiline: {
@@ -187,7 +187,7 @@ function createTsConfig(opts) {
                     },
                     multilineDetection: "brackets",
                 },
-            ],
+            ],*/
             "@typescript-eslint/method-signature-style": ["off"],
             "@typescript-eslint/no-confusing-void-expression": ["off"],
             "@typescript-eslint/no-dynamic-delete": ["off"],
@@ -286,7 +286,7 @@ export default function ({ts, useReactRules, ignores, boundaries, ...rest}) {
 
     if (boundaries) {
         rules.push( {
-            plugins: { boundaries },
+            plugins: { boundaries: boundariesPlugin },
             settings: {
                 "boundaries/elements": boundaries.elements,
             },

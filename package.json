@@ -1,6 +1,6 @@
 {
   "name": "@qws-org/eslint-config-react-typescript-jtym",
-  "version": "5.0.1",
+  "version": "5.0.0",
   "description": "",
   "type": "module",
   "scripts": {
@@ -22,9 +22,9 @@
   ],
   "homepage": "https://github.com/qws-org/eslint-config-react-typescript-jtym",
   "dependencies": {
-    "@typescript-eslint/eslint-plugin": "6.16.0",
-    "@typescript-eslint/parser": "6.16.0",
-    "@typescript-eslint/typescript-estree": "6.16.0",
+    "@typescript-eslint/eslint-plugin": "8.7.0",
+    "@typescript-eslint/parser": "8.7.0",
+    "@typescript-eslint/typescript-estree": "8.7.0",
     "eslint": "8.57.0",
     "eslint-config-love": "62.0.0",
     "eslint-config-prettier": "9.1.0",
@@ -42,7 +42,8 @@
     "eslint-plugin-simple-import-sort": "12.1.1",
     "eslint-plugin-storybook": "0.11.1",
     "eslint-plugin-unicorn": "55.0.0",
-    "globals": "16.0.0"
+    "globals": "16.0.0",
+    "@stylistic/eslint-plugin-ts": "4.2.0"
   },
   "packageManager": "pnpm@9.14.2+sha512.6e2baf77d06b9362294152c851c4f278ede37ab1eba3a55fda317a4a17b209f4dbb973fb250a77abc463a341fcb1f17f17cfa24091c4eb319cda0d9b84278387"
 }
