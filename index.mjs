@@ -316,14 +316,14 @@ const tsConfig = {
     "import/parsers": {
       "@typescript-eslint/parser": [".ts", ".tsx"],
     },
-    "import/resolver": {
+   /* "import/resolver": {
       node: {
         extensions: [".ts", ".tsx"],
       },
       typescript: {
         project: opts.project,
       },
-    },
+    },*/
   },
 }
 
