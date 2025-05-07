@@ -72,15 +72,6 @@ const createBaseConfig = (globalLanguageOptions) => {
                 ...globals.es2021,
                 ...globals.browser,
                 ...globals.node,
-           /*     LanguageCode: "readonly",
-                ExtractArrayItemType: "readonly",
-                DataLayer: "readonly",
-                ID: "readonly",
-                ReportSelectors: "readonly",
-                MetricType: "readonly",
-                DimensionType: "readonly",
-                DeepPartial: "readonly",
-                UiKitFC: "readonly",*/
                 ...globalLanguageOptions,
             },
         },
@@ -280,7 +271,7 @@ const reactRules = {
  * @return {import('eslint').Linter.FlatConfig}
  */
 export default function ({ts, explicitFunctionReturnType, useReactRules, ignores, boundaries, ...rest}) {
-    const rules = [createBaseConfig(globals?.languageOptions ?? {}), eslintPluginPrettierRecommended];
+    const rules = [createBaseConfig(rest.globals?.languageOptions ?? {}), eslintPluginPrettierRecommended];
     const globals = {
         ...globs,
         ...rest.globs,
