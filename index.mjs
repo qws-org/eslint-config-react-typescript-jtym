@@ -57,65 +57,70 @@ const tsRules = Object.entries(jsRules).reduce(
  * Конфиг задающий основные правила ESLint
  * @type {import('eslint').Linter.FlatConfig}
  */
-const baseConfig = {
-    files: [globs.any],
-    plugins: {
-        import: pluginImport,
-        n: pluginN,
-        promise: pluginPromise,
-        unicorn: pluginUnicorn,
-        "simple-import-sort": pluginSimpleImportSort,
-    },
-    languageOptions: {
-        globals: {
-            ...globals.es2021,
-            ...globals.browser,
-            ...globals.node,
-            LanguageCode: "readonly",
-            ExtractArrayItemType: "readonly",
-            DataLayer: "readonly",
-            ID: "readonly",
-            ReportSelectors: "readonly",
-            MetricType: "readonly",
-            DimensionType: "readonly",
-            DeepPartial: "readonly",
-            UiKitFC: "readonly",
+const createBaseConfig = (globalLanguageOptions) => {
+    const baseConfig = {
+        files: [globs.any],
+        plugins: {
+            import: pluginImport,
+            n: pluginN,
+            promise: pluginPromise,
+            unicorn: pluginUnicorn,
+            "simple-import-sort": pluginSimpleImportSort,
         },
-    },
-    rules: {
-        ...configStandard.rules,
-        ...jsRules,
-        camelcase: "off",
-        "import/no-absolute-path": ["off"],
-        "import/newline-after-import": ["error"],
-        "import/no-useless-path-segments": [
-            "error",
-            {
-                noUselessIndex: true,
+        languageOptions: {
+            globals: {
+                ...globals.es2021,
+                ...globals.browser,
+                ...globals.node,
+           /*     LanguageCode: "readonly",
+                ExtractArrayItemType: "readonly",
+                DataLayer: "readonly",
+                ID: "readonly",
+                ReportSelectors: "readonly",
+                MetricType: "readonly",
+                DimensionType: "readonly",
+                DeepPartial: "readonly",
+                UiKitFC: "readonly",*/
+                ...globalLanguageOptions,
             },
-        ],
-        "n/no-callback-literal": ["off"],
-        "no-console": [
-            "error",
-            {
-                allow: ["info", "warn", "error"],
-            },
-        ],
-        "no-use-before-define": [
-            "error",
-            {
-                functions: true,
-                classes: true,
-                variables: true,
-                allowNamedExports: false,
-            },
-        ],
-        "simple-import-sort/exports": ["error"],
-        "simple-import-sort/imports": ["error"],
-        "unicorn/expiring-todo-comments": ["error"],
-        "unicorn/prefer-node-protocol": ["error"],
-    },
-};
+        },
+        rules: {
+            ...configStandard.rules,
+            ...jsRules,
+            camelcase: "off",
+            "import/no-absolute-path": ["off"],
+            "import/newline-after-import": ["error"],
+            "import/no-useless-path-segments": [
+                "error",
+                {
+                    noUselessIndex: true,
+                },
+            ],
+            "n/no-callback-literal": ["off"],
+            "no-console": [
+                "error",
+                {
+                    allow: ["info", "warn", "error"],
+                },
+            ],
+            "no-use-before-define": [
+                "error",
+                {
+                    functions: true,
+                    classes: true,
+                    variables: true,
+                    allowNamedExports: false,
+                },
+            ],
+            "simple-import-sort/exports": ["error"],
+            "simple-import-sort/imports": ["error"],
+            "unicorn/expiring-todo-comments": ["error"],
+            "unicorn/prefer-node-protocol": ["error"],
+        },
+    };
+
+    return baseConfig;
+}
 
 const {"@typescript-eslint/ban-types": _, ...standardLoveRules} =
     configStandardWithTypescript.rules;
@@ -271,11 +276,11 @@ const reactRules = {
  *       explicitFunctionReturnType?: {allowedNames: Array<string>},
  *       ts?: {tsconfigRootDir: string; project: Array<string>},
  *       useReactRules?: boolean,
- *       globs?: {js?: string; ts?:string, tsx?: string, any?:string, config?: string} }}
+ *       globs?: {js?: string; ts?:string, tsx?: string, any?:string, config?: string, languageOptions: Record<string, string>} }}
  * @return {import('eslint').Linter.FlatConfig}
  */
 export default function ({ts, explicitFunctionReturnType, useReactRules, ignores, boundaries, ...rest}) {
-    const rules = [baseConfig, eslintPluginPrettierRecommended];
+    const rules = [createBaseConfig(globals?.languageOptions ?? {}), eslintPluginPrettierRecommended];
     const globals = {
         ...globs,
         ...rest.globs,
