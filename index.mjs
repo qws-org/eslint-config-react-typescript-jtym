@@ -271,7 +271,7 @@ const reactRules = {
  * @return {import('eslint').Linter.FlatConfig}
  */
 export default function ({ts, explicitFunctionReturnType, useReactRules, ignores, boundaries, ...rest}) {
-    const rules = [createBaseConfig(rest.globals?.languageOptions ?? {}), eslintPluginPrettierRecommended];
+    const rules = [createBaseConfig(rest.globs?.languageOptions ?? {}), eslintPluginPrettierRecommended];
     const globals = {
         ...globs,
         ...rest.globs,
