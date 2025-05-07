@@ -4,7 +4,10 @@
   "description": "",
   "type": "module",
   "scripts": {
-    "publish-package": "pnpm publish"
+    "publish-package": "pnpm publish",
+    "update:minor": "pnpm version minor",
+    "update:major": "pnpm version major",
+    "update:patch": "pnpm version patch"
   },
   "publishConfig": {
     "registry": "https://npm.pkg.github.com"
