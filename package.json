@@ -1,6 +1,6 @@
 {
-  "name": "@qws-org/eslint-config-react-typescript-jtym",
-  "version": "7.0.1",
+  "name": "@qws-org/lint-configs",
+  "version": "1.0.0",
   "description": "",
   "type": "module",
   "scripts": {
@@ -14,14 +14,16 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/qws-org/eslint-config-react-typescript-jtym"
+    "url": "git+https://github.com/qws-org/lint-configs"
   },
   "main": "index.mjs",
   "bin": {
     "commitlint": "./bin/commitlint.mjs",
     "eslint": "./bin/eslint.mjs",
+    "prettier": "./bin/prettier.mjs",
     "qws-commitlint": "./bin/commitlint.mjs",
-    "qws-eslint": "./bin/eslint.mjs"
+    "qws-eslint": "./bin/eslint.mjs",
+    "qws-prettier": "./bin/prettier.mjs"
   },
   "exports": {
     ".": "./index.mjs"
@@ -30,8 +32,11 @@
     "bin",
     "index.mjs"
   ],
-  "homepage": "https://github.com/qws-org/eslint-config-react-typescript-jtym",
+  "homepage": "https://github.com/qws-org/lint-configs",
   "dependencies": {
+    "@commitlint/cli": "20.5.3",
+    "@commitlint/config-conventional": "20.5.3",
+    "@stylistic/eslint-plugin-ts": "4.2.0",
     "@typescript-eslint/eslint-plugin": "8.7.0",
     "@typescript-eslint/parser": "8.7.0",
     "@typescript-eslint/typescript-estree": "8.7.0",
@@ -53,9 +58,7 @@
     "eslint-plugin-storybook": "0.11.1",
     "eslint-plugin-unicorn": "55.0.0",
     "globals": "16.0.0",
-    "@stylistic/eslint-plugin-ts": "4.2.0",
-    "@commitlint/cli": "20.5.3",
-    "@commitlint/config-conventional": "20.5.3"
+    "prettier": "3.6.2"
   },
   "packageManager": "pnpm@9.14.2+sha512.6e2baf77d06b9362294152c851c4f278ede37ab1eba3a55fda317a4a17b209f4dbb973fb250a77abc463a341fcb1f17f17cfa24091c4eb319cda0d9b84278387"
 }
