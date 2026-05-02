@@ -1,6 +1,6 @@
 {
   "name": "@qws-org/eslint-config-react-typescript-jtym",
-  "version": "7.0.0",
+  "version": "7.0.1",
   "description": "",
   "type": "module",
   "scripts": {
@@ -17,10 +17,17 @@
     "url": "git+https://github.com/qws-org/eslint-config-react-typescript-jtym"
   },
   "main": "index.mjs",
+  "bin": {
+    "commitlint": "./bin/commitlint.mjs",
+    "eslint": "./bin/eslint.mjs",
+    "qws-commitlint": "./bin/commitlint.mjs",
+    "qws-eslint": "./bin/eslint.mjs"
+  },
   "exports": {
     ".": "./index.mjs"
   },
   "files": [
+    "bin",
     "index.mjs"
   ],
   "homepage": "https://github.com/qws-org/eslint-config-react-typescript-jtym",
