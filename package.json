@@ -1,6 +1,6 @@
 {
-  "name": "@qws-org/lint-configs",
-  "version": "1.0.0",
+  "name": "@qws-org/dev-tooling",
+  "version": "1.1.0",
   "description": "",
   "type": "module",
   "scripts": {
@@ -14,25 +14,33 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/qws-org/lint-configs"
+    "url": "git+https://github.com/qws-org/dev-tooling"
   },
   "main": "index.mjs",
   "bin": {
     "commitlint": "./bin/commitlint.mjs",
     "eslint": "./bin/eslint.mjs",
     "prettier": "./bin/prettier.mjs",
+    "tsc": "./bin/tsc.mjs",
+    "tsserver": "./bin/tsserver.mjs",
     "qws-commitlint": "./bin/commitlint.mjs",
     "qws-eslint": "./bin/eslint.mjs",
-    "qws-prettier": "./bin/prettier.mjs"
+    "qws-prettier": "./bin/prettier.mjs",
+    "qws-tsc": "./bin/tsc.mjs",
+    "qws-tsserver": "./bin/tsserver.mjs"
   },
   "exports": {
-    ".": "./index.mjs"
+    ".": "./index.mjs",
+    "./tsconfig/nest": "./tsconfig/nest.json",
+    "./tsconfig/node": "./tsconfig/node.json",
+    "./tsconfig/react-vite": "./tsconfig/react-vite.json"
   },
   "files": [
     "bin",
-    "index.mjs"
+    "index.mjs",
+    "tsconfig"
   ],
-  "homepage": "https://github.com/qws-org/lint-configs",
+  "homepage": "https://github.com/qws-org/dev-tooling",
   "dependencies": {
     "@commitlint/cli": "20.5.3",
     "@commitlint/config-conventional": "20.5.3",
@@ -58,7 +66,8 @@
     "eslint-plugin-storybook": "0.11.1",
     "eslint-plugin-unicorn": "55.0.0",
     "globals": "16.0.0",
-    "prettier": "3.6.2"
+    "prettier": "3.6.2",
+    "typescript": "5.9.2"
   },
   "packageManager": "pnpm@9.14.2+sha512.6e2baf77d06b9362294152c851c4f278ede37ab1eba3a55fda317a4a17b209f4dbb973fb250a77abc463a341fcb1f17f17cfa24091c4eb319cda0d9b84278387"
 }
