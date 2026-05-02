@@ -270,7 +270,7 @@ const reactRules = {
  *       globs?: {js?: string; ts?:string, tsx?: string, any?:string, config?: string, languageOptions: Record<string, string>} }}
  * @return {import('eslint').Linter.FlatConfig}
  */
-export default function ({ts, explicitFunctionReturnType, useReactRules, ignores, boundaries, ...rest}) {
+export function createEslintConfig({ts, explicitFunctionReturnType, useReactRules, ignores, boundaries, ...rest}) {
     const rules = [createBaseConfig(rest.globs?.languageOptions ?? {}), eslintPluginPrettierRecommended];
     const globals = {
         ...globs,
@@ -323,3 +323,49 @@ export default function ({ts, explicitFunctionReturnType, useReactRules, ignores
 
     return rules;
 };
+
+
+export function createCommitLintConfig() {
+    const hasCyrillic = /[А-Яа-яЁё]/;
+    const startsWithJiraIssue = /^\[[A-Z][A-Z0-9]+-\d+\]\s+\S/;
+
+    return {
+        extends: ['@commitlint/config-conventional'],
+        plugins: [
+            {
+                rules: {
+                    'subject-jira-issue': (parsed) => {
+                        const subject = parsed.subject || '';
+                        if (!subject) {
+                            return [true];
+                        }
+
+                        const isValid = startsWithJiraIssue.test(subject);
+
+                        return [
+                            isValid,
+                            'subject должен начинаться с номера задачи в формате [YY-XXX], например "fix: [BONUS-123] исправить расчет бонусов"',
+                        ];
+                    },
+                    'subject-russian': (parsed) => {
+                        const subject = parsed.subject || '';
+                        if (!subject) {
+                            return [true];
+                        }
+
+                        const isValid = hasCyrillic.test(subject);
+
+                        return [
+                            isValid,
+                            'subject должен быть на русском языке: используйте кириллицу после номера задачи, например "fix: [BONUS-123] исправить расчет бонусов"',
+                        ];
+                    },
+                },
+            },
+        ],
+        rules: {
+            'subject-jira-issue': [2, 'always'],
+            'subject-russian': [2, 'always'],
+        },
+    };
+}
